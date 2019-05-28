@@ -1,2 +1,10 @@
-# TIL
-Today I Learned
+# Today I Learned
+
+오늘 하루 새로 배웠던 것을 간단하게 정리하여 commit 합니다.
+
+## 규칙
+
+---
+
+1. 파일은 모두 `MarkDown` 파일로 작성합니다.
+1. 파일의 이름은 모두 `영어`로 작성합니다.
