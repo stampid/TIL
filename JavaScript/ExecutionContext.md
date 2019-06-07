@@ -52,5 +52,3 @@
    - this value  
       this 프로퍼티는 this 값이 할당되는데 할당되는 값은  
       this의 5가지(global, functionInvocation, (call,apply,bind), Construction, MethodInvocation)패턴으로 결정된다.
-
-studying....
