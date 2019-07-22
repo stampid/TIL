@@ -68,7 +68,7 @@ sns 웹 혹은 어플을 실행시켰을 때 user의 정보, 타임 라인, 알�
    - nodemon은 파일이 수정될 때마다 서버를 자동으로 재시작시켜준다.
 
    ```
-    yarn add babel-cli --dev
+    yarn add babel-cli
    ```
 
    - babel은 최신의 자바스크립트 문법을 서버가 알 수 있게 변환 시켜주는 역할을 한다.
@@ -77,13 +77,13 @@ sns 웹 혹은 어플을 실행시켰을 때 user의 정보, 타임 라인, 알�
 
      ```javascript
      {
-       "presets": ["env", "stage-3"];
+       "presets": ["env", "stage-3"]
      }
      ```
 
      - 환경 설정에 필요한 모듈들을 설치해준다.
        ```
-         yarn add babel-cli babel-preset-env babel-preset-stage-3 --dev
+         yarn add babel-cli babel-preset-env babel-preset-stage-3
        ```
 
    - package.json에 명령어를 추가한다.
