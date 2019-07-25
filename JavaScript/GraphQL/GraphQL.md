@@ -154,3 +154,69 @@ sns 웹 혹은 어플을 실행시켰을 때 user의 정보, 타임 라인, 알�
    - `GraphQLServer` 안에는 express가 내장되어 있기때문에 express의 메소드를 사용할 수 있다.(`server.use(모듈)`)
    - `localhost:4000으로 이동하면 GraphQl Playground가 나온다.
    - Playrground를 통해 Query를 보내서 어떤 결과값이 나오는지, 어떤 Query가 있는지 등을 확인해 볼 수 있다.
+
+## **_GraphQL Schema, resolver 마치 프로처럼!!! 정의하는 방법_**
+
+1. 우선 필요한 묘듈인 `merge-graphql-schemas`와 `graphql-tools`, `path`를 설치한다.
+1. schema.js 파일을 하나 생성한다.
+
+   ```javascript
+   // schema.js 코드 내용
+   import {
+     fileLoader,
+     mergeResolvers,
+     mergeTypes
+   } from "merge-graphql-schemas";
+   import path from "path";
+   import { makeExecutableSchema } from "graphql-tools";
+
+   const allTypes = fileLoader(path.join(__dirname, "/api/**/*.graphql"));
+   // api 폴더 안에 모든 폴더에 모든 graphql 파일을 불러온다.
+
+   const allResolvers = fileLoader(path.join(__dirname, "/api/**/*.js"));
+   // api 폴더 안에 모든 폴더에 모든 js(resolver) 파일을 불러온다.
+
+   const schema = makeExecutableSchema({
+     typeDefs: mergeTypes(allTypes),
+     resolvers: mergeResolvers(allResolvers)
+   });
+   // schema 변수에 typeDefs, resolvers를 정의하여 담아주고 그것을 export 해준다.
+
+   export default schema;
+   ```
+
+1. api 폴더를 생성한다.
+1. api 폴더 안에 Greetings 폴더를 생성한다.
+1. Greetings 폴더 안에 `sayHello.js`, `sayHello.graphql` 파일을 생성한다.
+
+   ```javascript
+   // sayHello.js 파일
+   export default {
+     Query: {
+       sayHello: () => "Hello!"
+     }
+   };
+   ```
+
+   ```javascript
+   // sayHello.graphql 파일
+   type Query{
+     sayHello: String!
+   }
+   ```
+
+   - 두 파일은 schema.js 파일을 통해 schema 변수에 정의되어 export가 된다.
+
+1. server 코드를 수정한다.
+
+   ```javascript
+   // index.js 파일
+   import { GraphQLServer } from "graphql-yogo";
+   import schema from "./schema"; // export한 schema를 가져온다.
+
+   const server = new GraphQLServer({ schema });
+   // GraphQLServer의 type과 resolver를 정의하는 방법은
+   // typeDefs, resolvers를 각각 정의하는 방법과 schema로 한번에 정의하는 방법이 있다.
+
+   server.start({ port: 4000 }, () => console.log("💻 Graphql Server Running"));
+   ```
