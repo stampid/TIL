@@ -131,7 +131,7 @@ sequelize init
    유저의 모델을 만드는 방법은
 
    ```javascript
-   sequelize model:create --name user --attributes "nickName: string, passWord: string"
+   sequelize model:create --name user --attributes nickName: string, passWord: string
    ```
 
    migrations 폴더에는 현재 시간을 이름으로 갖는 migration 파일이 생성된다.  
